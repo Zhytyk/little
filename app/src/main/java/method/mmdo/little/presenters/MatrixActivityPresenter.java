@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.widget.Button;
+import android.widget.GridLayout;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,7 +17,7 @@ import method.mmdo.little.views.MatrixActivityView;
 public class MatrixActivityPresenter implements MatrixPresenter {
     private static MatrixPresenter instance;
 
-    private final MatrixActivityView view;
+    private MatrixActivityView view;
     private final Setting setting;
     private final MatrixHolder matrixHolder;
 
@@ -27,14 +28,7 @@ public class MatrixActivityPresenter implements MatrixPresenter {
     }
 
     public static MatrixPresenter of(MatrixActivityView view)   {
-        if (instance == null) {
-            synchronized (SettingActivitityPresenter.class) {
-                if (instance == null) {
-                    instance = new MatrixActivityPresenter(view);
-                }
-            }
-        }
-
+        instance = new MatrixActivityPresenter(view);
         return instance;
     }
 

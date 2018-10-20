@@ -12,14 +12,7 @@ public class Setting implements Serializable {
     }
 
     public static Setting of(int dimension) {
-        if (instance == null) {
-            synchronized (Setting.class) {
-                if (instance == null) {
-                    instance = new Setting(dimension);
-                }
-            }
-        }
-
+        instance = new Setting(dimension);
         return instance;
     }
 

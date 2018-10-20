@@ -26,7 +26,6 @@ public class MatrixActivity extends AppCompatActivity implements MatrixActivityV
 
         presenter = MatrixActivityPresenter.of(this);
         presenter.renderMatrix();
-
     }
 
     @Override
