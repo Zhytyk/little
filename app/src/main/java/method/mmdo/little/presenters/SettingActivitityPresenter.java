@@ -3,7 +3,13 @@ package method.mmdo.little.presenters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+
+import org.apache.commons.lang3.StringUtils;
 
 import method.mmdo.little.MatrixActivity;
 import method.mmdo.little.models.Setting;
@@ -34,6 +40,9 @@ public class SettingActivitityPresenter implements SettingPresenter {
 
     @Override
     public void goNext() {
+        ProgressBar progressBar = view.getProgressBar();
+        progressBar.setVisibility(View.VISIBLE);
+
         Intent intent = new Intent((Context) view, MatrixActivity.class);
 
         EditText editText = view.getDimensionInput();
@@ -42,6 +51,18 @@ public class SettingActivitityPresenter implements SettingPresenter {
         sendDataToMatrixActivity(intent);
 
         view.startActivity(intent);
+    }
+
+    @Override
+    public void onAfterDimensionTextChanged(Editable value) {
+        Button goNextBtn = view.getGoNextBtn();
+
+        if (StringUtils.isNumeric(value)) {
+            int parsedValue = Integer.parseInt(value.toString());
+            goNextBtn.setEnabled(parsedValue > 0 && parsedValue <= 8);
+        } else {
+            goNextBtn.setEnabled(false);
+        }
     }
 
     private void sendDataToMatrixActivity(Intent intent) {

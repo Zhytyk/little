@@ -2,6 +2,8 @@
     <string name="app_name">Little</string>
     <string name="dimension">Dimension:</string>
     <string name="next">Go next</string>
+    <string name="go">Go</string>
     <string name="title_activity_matrix">MatrixActivity</string>
     <string name="matrix_label">Input matrix</string>
+    <string name="dimension_default_value">5</string>
 </resources>

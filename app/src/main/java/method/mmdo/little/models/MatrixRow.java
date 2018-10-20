@@ -1,12 +1,11 @@
 package method.mmdo.little.models;
 
-import android.content.Context;
 import android.util.SparseArray;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import method.mmdo.little.MatrixTitleCellInitializer;
+import method.mmdo.little.initializers.MatrixTitleCellInitializer;
 import method.mmdo.little.initializers.ComponentFactory;
 import method.mmdo.little.initializers.MatrixCellInitializer;
 

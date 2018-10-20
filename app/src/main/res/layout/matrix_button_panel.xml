@@ -5,9 +5,10 @@
     android:layout_gravity="center">
 
     <Button
-        android:id="@+id/goNext"
+        android:id="@+id/goBtn"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:onClick="onClickGoNext"
-        android:text="@string/next" />
+        android:onClick="onClickGo"
+        android:text="@string/go" />
+
 </LinearLayout>

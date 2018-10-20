@@ -1,20 +1,13 @@
 package method.mmdo.little.presenters;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.text.Editable;
+import android.widget.Button;
 
 import org.apache.commons.lang3.StringUtils;
 
 import method.mmdo.little.MatrixActivity;
-import method.mmdo.little.MatrixTitleCellInitializer;
-import method.mmdo.little.initializers.ComponentFactory;
-import method.mmdo.little.initializers.MatrixCellInitializer;
-import method.mmdo.little.initializers.MatrixRowInitializer;
 import method.mmdo.little.models.MatrixHolder;
 import method.mmdo.little.models.Setting;
 import method.mmdo.little.presenters.interfaces.MatrixPresenter;
@@ -45,9 +38,23 @@ public class MatrixActivityPresenter implements MatrixPresenter {
         return instance;
     }
 
+    public static MatrixPresenter getInstance() {
+        if (instance == null) {
+            throw new RuntimeException("Instance hasn't been initialized yet.");
+        }
+
+        return instance;
+    }
+
     @Override
     public void renderMatrix() {
         this.matrixHolder.renderMatrix();
+    }
+
+    @Override
+    public void onAfterTextChangedMatrixCell(Editable value) {
+        Button goBtn = view.getGoBtn();
+        goBtn.setEnabled(StringUtils.isNumeric(value));
     }
 
     private Setting getSetting() {

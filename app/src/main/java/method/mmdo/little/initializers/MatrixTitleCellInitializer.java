@@ -1,5 +1,6 @@
-package method.mmdo.little;
+package method.mmdo.little.initializers;
 
+import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class MatrixTitleCellInitializer {
     public TextView init() {
         titleCell.setLayoutParams(layoutParams);
         titleCell.setText(value);
+        titleCell.setGravity(Gravity.CENTER_HORIZONTAL);
 
         return titleCell;
     }
