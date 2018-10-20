@@ -1,50 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".SettingActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <include layout="@layout/setting_panel"
+            android:id="@+id/setting_panel"/>
+        <include layout="@layout/confirm_setting_panel"
+            android:id="@+id/confirm_setting_panel"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:labelFor="@+id/dimension"
-                android:text="@string/dimension"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/dimension"
-                android:layout_width="320dp"
-                android:layout_height="50dp"
-                android:inputType="number"
-                tools:layout_editor_absoluteX="74dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:onClick="onClickGoNext"
-                android:text="@string/next" />
-        </LinearLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
