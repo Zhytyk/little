@@ -10,6 +10,7 @@ import method.mmdo.little.listeners.MatrixCellTextWatcher;
 import method.mmdo.little.presenters.MatrixActivityPresenter;
 
 public class MatrixCellInitializer {
+    private static int CELL_WIDTH = 150;
     private EditText cell;
     private LinearLayout.LayoutParams layoutParams;
 
@@ -19,7 +20,6 @@ public class MatrixCellInitializer {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.weight = 1.0f;
     }
 
     public static MatrixCellInitializer of(EditText editText) {
@@ -30,6 +30,7 @@ public class MatrixCellInitializer {
         cell.setLayoutParams(layoutParams);
         cell.setInputType(InputType.TYPE_CLASS_NUMBER);
         cell.setGravity(Gravity.CENTER_HORIZONTAL);
+        cell.setWidth(CELL_WIDTH);
 
         addTextWatcher();
 

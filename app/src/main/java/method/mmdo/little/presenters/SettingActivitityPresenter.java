@@ -59,7 +59,7 @@ public class SettingActivitityPresenter implements SettingPresenter {
 
         if (StringUtils.isNumeric(value)) {
             int parsedValue = Integer.parseInt(value.toString());
-            goNextBtn.setEnabled(parsedValue > 0 && parsedValue <= 8);
+            goNextBtn.setEnabled(parsedValue > 0 && parsedValue <= 12);
         } else {
             goNextBtn.setEnabled(false);
         }

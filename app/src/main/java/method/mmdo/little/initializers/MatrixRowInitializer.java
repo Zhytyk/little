@@ -1,6 +1,5 @@
 package method.mmdo.little.initializers;
 
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -11,7 +10,7 @@ public class MatrixRowInitializer {
     private MatrixRowInitializer(LinearLayout row) {
         this.row = row;
         this.layoutParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
     }

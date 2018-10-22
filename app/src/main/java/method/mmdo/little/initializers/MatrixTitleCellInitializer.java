@@ -6,6 +6,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MatrixTitleCellInitializer {
+    private static int CELL_WIDTH = 150;
+
     private TextView titleCell;
     private LinearLayout.LayoutParams layoutParams;
     private String value;
@@ -16,7 +18,6 @@ public class MatrixTitleCellInitializer {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.weight = 1.0f;
         this.value = value;
     }
 
@@ -31,6 +32,7 @@ public class MatrixTitleCellInitializer {
         titleCell.setLayoutParams(layoutParams);
         titleCell.setText(value);
         titleCell.setGravity(Gravity.CENTER_HORIZONTAL);
+        titleCell.setWidth(CELL_WIDTH);
 
         return titleCell;
     }
