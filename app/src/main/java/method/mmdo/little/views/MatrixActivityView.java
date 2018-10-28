@@ -1,11 +1,9 @@
 package method.mmdo.little.views;
 
-import android.widget.Button;
 import android.widget.GridLayout;
 
-import method.mmdo.little.models.Setting;
-
 public interface MatrixActivityView {
+    void setBtnEnabled(String value);
+    int getDimension();
     GridLayout getMatrix();
-    Button getGoBtn();
 }

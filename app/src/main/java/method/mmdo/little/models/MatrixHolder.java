@@ -6,6 +6,9 @@ import android.widget.LinearLayout;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import method.mmdo.little.initializers.ComponentFactory;
 import method.mmdo.little.initializers.MatrixRowInitializer;
 
@@ -14,14 +17,14 @@ public class MatrixHolder {
     private GridLayout matrixLayout;
     private Setting setting;
 
-    private MatrixHolder(GridLayout matrixLayout, Setting setting) {
+    private MatrixHolder(GridLayout matrixLayout, int dimension) {
         this.matrixLayout = matrixLayout;
         this.matrix = new SparseArray<>();
-        this.setting = setting;
+        this.setting = Setting.of(dimension);
     }
 
-    public static MatrixHolder of(GridLayout matrixLayout, Setting setting) {
-        return new MatrixHolder(matrixLayout, setting);
+    public static MatrixHolder of(GridLayout matrixLayout, int dimension) {
+        return new MatrixHolder(matrixLayout, dimension);
     }
 
     public void renderMatrix() {
@@ -65,6 +68,35 @@ public class MatrixHolder {
         }
 
         layout.addView(row);
+    }
+
+    public ArrayList<String> getCellValues() {
+        ArrayList<String> values = new ArrayList<>();
+
+        for (int i = 0; i < matrix.size(); i++) {
+            MatrixRow row = matrix.valueAt(i);
+            SparseArray<MatrixCell> cells = row.getCells();
+
+            for (int j = 0; j < cells.size(); j++) {
+                MatrixCell cell = cells.valueAt(j);
+                values.add(cell.getCell().getText().toString());
+            }
+        }
+
+        return values;
+    }
+
+    public void setCellValues(List<String> cellValues) {
+        int counter = 0;
+        for (int i = 0; i < matrix.size(); i++) {
+            MatrixRow row = matrix.valueAt(i);
+            SparseArray<MatrixCell> cells = row.getCells();
+
+            for (int j = 0; j < cells.size(); j++) {
+                MatrixCell cell = cells.valueAt(j);
+                cell.getCell().setText( cellValues.get(counter++) );
+            }
+        }
     }
 
 }

@@ -45,4 +45,8 @@ public class MatrixRow {
 
         layout.addView(cell);
     }
+
+    public SparseArray<MatrixCell> getCells() {
+        return row;
+    }
 }

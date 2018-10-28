@@ -1,8 +1,12 @@
 package method.mmdo.little.presenters.interfaces;
 
-import android.text.Editable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface MatrixPresenter {
     void renderMatrix();
-    void onAfterTextChangedMatrixCell(Editable value);
+    void onAfterTextChangedMatrixCell(String value);
+    ArrayList<String> getCellValues();
+    void setCellValues(List<String> cellValues);
 }

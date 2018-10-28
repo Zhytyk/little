@@ -1,30 +1,24 @@
 package method.mmdo.little.presenters;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.widget.Button;
-import android.widget.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
-import method.mmdo.little.MatrixActivity;
 import method.mmdo.little.models.MatrixHolder;
-import method.mmdo.little.models.Setting;
 import method.mmdo.little.presenters.interfaces.MatrixPresenter;
 import method.mmdo.little.views.MatrixActivityView;
 
 public class MatrixActivityPresenter implements MatrixPresenter {
     private static MatrixPresenter instance;
 
-    private MatrixActivityView view;
-    private final Setting setting;
+    private final MatrixActivityView view;
     private final MatrixHolder matrixHolder;
 
     private MatrixActivityPresenter(MatrixActivityView view) {
         this.view = view;
-        this.setting = getSetting();
-        this.matrixHolder = MatrixHolder.of(view.getMatrix(), setting);
+        this.matrixHolder = MatrixHolder.of(
+                view.getMatrix(),
+                view.getDimension()
+        );
     }
 
     public static MatrixPresenter of(MatrixActivityView view)   {
@@ -46,21 +40,17 @@ public class MatrixActivityPresenter implements MatrixPresenter {
     }
 
     @Override
-    public void onAfterTextChangedMatrixCell(Editable value) {
-        Button goBtn = view.getGoBtn();
-        goBtn.setEnabled(StringUtils.isNumeric(value));
+    public void onAfterTextChangedMatrixCell(String value) {
+        view.setBtnEnabled(value);
     }
 
-    private Setting getSetting() {
-        MatrixActivity activity = (MatrixActivity) view;
+    @Override
+    public ArrayList<String> getCellValues() {
+        return matrixHolder.getCellValues();
+    }
 
-        Intent intent = activity.getIntent();
-        Bundle bundle = intent.getExtras();
-
-        if (bundle != null) {
-            return (Setting) bundle.getSerializable(Setting.SETTING);
-        }
-
-        throw new IllegalArgumentException("No settings");
+    @Override
+    public void setCellValues(List<String> cellValues) {
+        matrixHolder.setCellValues(cellValues);
     }
 }

@@ -28,6 +28,6 @@ public class MatrixCellTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        presenter.onAfterTextChangedMatrixCell(s);
+        presenter.onAfterTextChangedMatrixCell(s.toString());
     }
 }

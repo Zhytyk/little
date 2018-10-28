@@ -1,10 +1,7 @@
 package method.mmdo.little.models;
 
-import java.io.Serializable;
 
-public class Setting implements Serializable {
-    public static final String SETTING = "setting";
-    private static Setting instance;
+public class Setting {
     private int dimension;
 
     private Setting(int dimension) {
@@ -12,8 +9,11 @@ public class Setting implements Serializable {
     }
 
     public static Setting of(int dimension) {
-        instance = new Setting(dimension);
-        return instance;
+        if (dimension <= 0) {
+            throw new IllegalArgumentException("Invalid dimension");
+        }
+
+        return new Setting(dimension);
     }
 
     public int getDimension() {

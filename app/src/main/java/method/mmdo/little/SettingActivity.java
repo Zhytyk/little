@@ -1,21 +1,20 @@
 package method.mmdo.little;
 
 import android.content.Intent;
-import android.support.annotation.Dimension;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import method.mmdo.little.listeners.DimensionTextWatcher;
-import method.mmdo.little.presenters.SettingActivitityPresenter;
+import method.mmdo.little.presenters.SettingActivityPresenter;
 import method.mmdo.little.presenters.interfaces.SettingPresenter;
 import method.mmdo.little.views.SettingActivityView;
 
 public class SettingActivity extends AppCompatActivity implements SettingActivityView {
+    public static final String DIMENSION = "setting";
 
     private SettingPresenter presenter;
     private Button goNextBtn;
@@ -28,10 +27,14 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
         setContentView(R.layout.activity_setting);
 
         progressBar = findViewById(R.id.pbLoading);
-        presenter = SettingActivitityPresenter.of(this);
+        presenter = SettingActivityPresenter.of(this);
         goNextBtn = findViewById(R.id.goNext);
         dimensionInput = findViewById(R.id.dimension);
         dimensionInput.addTextChangedListener(DimensionTextWatcher.get(presenter));
+
+        if (savedInstanceState != null) {
+            dimensionInput.setText(savedInstanceState.getString(DIMENSION));
+        }
     }
 
     @Override
@@ -41,22 +44,31 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(DIMENSION, dimensionInput.getText().toString());
+    }
+
+    @Override
     public void onClickGoNext(View btn) {
-        presenter.goNext();
+        progressBar.setVisibility(View.VISIBLE);
+        sendDataToMatrixActivity();
     }
 
     @Override
-    public EditText getDimensionInput() {
-        return dimensionInput;
+    public void enableGoNextBtn(boolean isEnable) {
+        goNextBtn.setEnabled(isEnable);
     }
 
-    @Override
-    public Button getGoNextBtn() {
-        return goNextBtn;
-    }
+    private void sendDataToMatrixActivity() {
+        Intent intent = new Intent(this, MatrixActivity.class);
 
-    @Override
-    public ProgressBar getProgressBar() {
-        return progressBar;
+        presenter.initSetting(dimensionInput.getText().toString());
+        intent.putExtra(
+                DIMENSION,
+                presenter.getDimension()
+        );
+
+        startActivity(intent);
     }
 }
