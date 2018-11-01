@@ -9,4 +9,5 @@ public interface MatrixPresenter {
     void onAfterTextChangedMatrixCell(String value);
     ArrayList<String> getCellValues();
     void setCellValues(List<String> cellValues);
+    void solve();
 }

@@ -5,9 +5,12 @@ import java.util.List;
 
 import method.mmdo.little.models.MatrixHolder;
 import method.mmdo.little.presenters.interfaces.MatrixPresenter;
+import method.mmdo.little.problem.Little;
 import method.mmdo.little.views.MatrixActivityView;
 
 public class MatrixActivityPresenter implements MatrixPresenter {
+    public static final String INFINITY = "-1";
+
     private static MatrixPresenter instance;
 
     private final MatrixActivityView view;
@@ -32,6 +35,29 @@ public class MatrixActivityPresenter implements MatrixPresenter {
         }
 
         return instance;
+    }
+
+    @Override
+    public void solve() {
+        int dimension = view.getDimension();
+
+        ArrayList<String> cellValues = matrixHolder.getCellValues();
+        Double[][] cellValuesArr = new Double[dimension][dimension];
+
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                String currentValue = cellValues.get(i * dimension + j);
+
+                if (currentValue.equals(INFINITY)) {
+                    cellValuesArr[i][j] = Double.POSITIVE_INFINITY;
+                    continue;
+                }
+
+                cellValuesArr[i][j] = Double.parseDouble(currentValue);
+            }
+        }
+
+        Little.get(cellValuesArr).solve();
     }
 
     @Override

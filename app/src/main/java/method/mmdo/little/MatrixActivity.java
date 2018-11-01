@@ -48,7 +48,7 @@ public class MatrixActivity extends AppCompatActivity implements MatrixActivityV
     }
 
     public void onClickGo(View view) {
-
+        presenter.solve();
     }
 
     @Override
