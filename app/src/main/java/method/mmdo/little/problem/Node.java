@@ -4,7 +4,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Node {
@@ -74,26 +73,27 @@ public class Node {
     private void lastBranchingCell() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
-                if (matrix[i][j].getValue() != 0) {
+                double value = matrix[i][j].getValue();
+                int colIndex = matrix[i][j].getColIndex();
+                int rowIndex = matrix[i][j].getRowIndex();
+
+                if (value != 0) {
                     continue;
                 }
 
-                branchingCell.add(BranchingCell.of(i, j, matrix[i][j].getValue()));
-            }
+                branchingCell.add(BranchingCell.of(i, j, colIndex, rowIndex, matrix[i][j].getValue())); }
         }
     }
 
     private void trySetNewRecord() {
-        List<BranchingCell> allCells = new ArrayList<>();
+        List<BranchingCell> allCells = new ArrayList<>(branchingCell);
 
         if (!isNewRecord()) {
             return;
         }
 
         Node current = this;
-        while (current.parent != null) {
-            current = current.parent;
-
+        while ((current = current.parent) != null) {
             allCells.addAll(current.branchingCell);
         }
 
@@ -101,7 +101,7 @@ public class Node {
     }
 
     private boolean isNewRecord() {
-        return !Record.get().getBranchingCells().isEmpty() &&
+        return Record.get().getBranchingCells().isEmpty() ||
                 Record.get().getMark().getValue() > mark.getValue();
     }
 
@@ -159,7 +159,7 @@ public class Node {
     }
 
     private void prohibitSubCircle(final Node node) {
-        List<BranchingCell> allCells = new ArrayList<>(branchingCell);
+        List<BranchingCell> allCells = new ArrayList<>();
         BranchingCell currentBranchingCell = branchingCell.get(0);
 
         Node current = node;
@@ -169,41 +169,42 @@ public class Node {
             allCells.addAll(current.branchingCell);
         }
 
-        BranchingCell rightEdge = findRightEdge(allCells, currentBranchingCell);
-        BranchingCell leftEdge = findLeftEdge(allCells, currentBranchingCell);
+        BranchingCell rightEdge = findRightEdge(new ArrayList<>(allCells), currentBranchingCell);
+        BranchingCell leftEdge = findLeftEdge(new ArrayList<>(allCells), currentBranchingCell);
 
-        setInfinity(rightEdge.getCol(), leftEdge.getRow(), node.matrix);
+        setInfinity(rightEdge.getRowIndex(), leftEdge.getColIndex(), node.matrix);
     }
 
     private BranchingCell findRightEdge(List<BranchingCell> allCells, BranchingCell currentBranchingCell) {
 
         BranchingCell found = CollectionUtils.find(allCells,
-                e -> e.getRow() == currentBranchingCell.getCol());
+                e -> e.getColIndex() == currentBranchingCell.getRowIndex());
 
         if (found != null) {
+            allCells.remove(found);
             return findRightEdge(allCells, found);
         }
-
 
         return currentBranchingCell;
     }
 
     private BranchingCell findLeftEdge(List<BranchingCell> allCells,  BranchingCell currentBranchingCell) {
         BranchingCell found = CollectionUtils.find(allCells,
-                e -> e.getCol() == currentBranchingCell.getRow());
+                e -> e.getRowIndex() == currentBranchingCell.getColIndex());
 
         if (found != null) {
-            return findRightEdge(allCells, found);
+            allCells.remove(found);
+            return findLeftEdge(allCells, found);
         }
 
         return currentBranchingCell;
     }
 
-    private void setInfinity(int col, int row, Cell[][] matrix) {
+    private void setInfinity(int colIndex, int rowIndex, Cell[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
-                if (matrix[i][j].getColIndex() == col &&
-                        matrix[i][j].getRowIndex() == row) {
+                if (matrix[i][j].getColIndex() == colIndex &&
+                        matrix[i][j].getRowIndex() == rowIndex) {
                     matrix[i][j].setInfinity();
                     return;
                 }
@@ -269,7 +270,7 @@ public class Node {
         double minRow = Double.POSITIVE_INFINITY;
 
         for (int i = 0; i < matrix.length; i++) {
-            if (i == col) {
+            if (i == row) {
                 continue;
             }
 
@@ -277,7 +278,7 @@ public class Node {
         }
 
         for (int i = 0; i < matrix.length; i++) {
-            if (i == row) {
+            if (i == col) {
                 continue;
             }
 
@@ -288,18 +289,21 @@ public class Node {
     }
 
     private void tryReplaceBranchingCell(int col, int row, double teta) {
+        int colIndex = matrix[col][row].getColIndex();
+        int rowIndex = matrix[col][row].getRowIndex();
+
         if (branchingCell.isEmpty()) {
-            branchingCell.add(BranchingCell.of(col, row, teta));
+            branchingCell.add(BranchingCell.of(col, row, colIndex, rowIndex, teta));
             return;
         }
 
         if (branchingCell.get(0).getValue() < teta) {
-            branchingCell.set(0, BranchingCell.of(col, row, teta));
+            branchingCell.set(0, BranchingCell.of(col, row, colIndex, rowIndex, teta));
         }
     }
 
     private double tryReplaceMin(int i, int j, double min) {
-        if (min <= matrix[j][i].getValue()) {
+        if (min <= matrix[i][j].getValue()) {
             return min;
         }
 

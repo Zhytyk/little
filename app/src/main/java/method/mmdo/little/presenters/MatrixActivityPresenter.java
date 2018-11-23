@@ -1,11 +1,14 @@
 package method.mmdo.little.presenters;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import method.mmdo.little.models.MatrixHolder;
 import method.mmdo.little.presenters.interfaces.MatrixPresenter;
 import method.mmdo.little.problem.Little;
+import method.mmdo.little.problem.Result;
 import method.mmdo.little.views.MatrixActivityView;
 
 public class MatrixActivityPresenter implements MatrixPresenter {
@@ -42,7 +45,7 @@ public class MatrixActivityPresenter implements MatrixPresenter {
         int dimension = view.getDimension();
 
         ArrayList<String> cellValues = matrixHolder.getCellValues();
-        Double[][] cellValuesArr = new Double[dimension][dimension];
+        double[][] cellValuesArr = new double[dimension][dimension];
 
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
@@ -57,7 +60,23 @@ public class MatrixActivityPresenter implements MatrixPresenter {
             }
         }
 
-        Little.get(cellValuesArr).solve();
+//        double[][] cellValuesArr =
+//                {
+//                        {Double.POSITIVE_INFINITY, 12, 6, 7, 9},
+//                        { 3, Double.POSITIVE_INFINITY, 5, 11, 5},
+//                        {4, 4, Double.POSITIVE_INFINITY, 2, 6},
+//                        {8, 7, 2, Double.POSITIVE_INFINITY, 3},
+//                        {1, 9, 13, 8, Double.POSITIVE_INFINITY}
+//                };
+
+        Double[][] values = new Double[dimension][];
+        for (int i = 0; i < dimension; i++) {
+            values[i] = ArrayUtils.toObject(cellValuesArr[i]);
+        }
+
+        Result result = Little.get(values).solve();
+
+        view.showResult(result.toStringCoords(), result.toStringMark());
     }
 
     @Override

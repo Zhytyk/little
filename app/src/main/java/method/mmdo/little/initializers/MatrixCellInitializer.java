@@ -28,7 +28,7 @@ public class MatrixCellInitializer {
 
     public EditText init() {
         cell.setLayoutParams(layoutParams);
-        cell.setInputType(InputType.TYPE_CLASS_NUMBER);
+        cell.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
         cell.setGravity(Gravity.CENTER_HORIZONTAL);
         cell.setWidth(CELL_WIDTH);
 

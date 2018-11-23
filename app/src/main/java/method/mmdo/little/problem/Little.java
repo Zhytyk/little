@@ -25,6 +25,6 @@ public class Little {
 
     public Result solve() {
         nodes.get(0).construct();
-        return null;
+        return Result.of(Record.get());
     }
 }

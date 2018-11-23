@@ -6,4 +6,5 @@ public interface MatrixActivityView {
     void setBtnEnabled(String value);
     int getDimension();
     GridLayout getMatrix();
+    void showResult(String resultCoords, String resultMark);
 }

@@ -16,6 +16,7 @@
 
                 <include layout="@layout/matrix_panel" />
                 <include layout="@layout/matrix_button_panel" />
+                <include layout="@layout/matrix_result_panel" />
         </LinearLayout>
     </HorizontalScrollView>
 </ScrollView>
